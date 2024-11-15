@@ -1,0 +1,50 @@
+/* :root {
+  --firstBlue: '#3f51b5',
+  --secondBlue: '#377cff',
+  --textWhite: '#fff',
+  --textBlack: '#000',
+  --bgWhite: '#fff',
+  --bgBlack: '#000',
+  --clr-red: '#ff0000'
+} */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  border: 2px solid var(--clr-red);
+  border: 2px solid red;
+}
+
+a {
+  text-decoration: none;
+  color: var(--textBlack);
+}
+
+button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+input {
+  outline: none;
+  border: none;
+}
+
+ul li {
+  list-style: none;
+}
+
+.active li {
+  color: #377cff;
+  font-weight: bold;
+}
