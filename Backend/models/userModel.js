@@ -1,21 +1,21 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    username:{
+    username: {
         type: String,
         require: true,
         unique: true
     },
-    fullName:{
+    fullName: {
         type: String,
         require: true,
     },
-    password:{
+    password: {
         type: String,
         require: true,
         minLength: 6
     },
-    email:{
+    email: {
         type: String,
         require: true,
         unique: true
@@ -23,14 +23,14 @@ const userSchema = new mongoose.Schema({
     followers: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref:"User",
+            ref: "User",
             default: []
         }
     ],
     following: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref:"User",
+            ref: "User",
             default: []
         }
     ],
@@ -50,15 +50,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    likedPosts:[
+    likedPosts: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Post",
-            default:[]
+            default: []
         }
     ]
 },
-{timestamps: true})
+    { timestamps: true })
 
 const User = mongoose.model("User", userSchema)
 

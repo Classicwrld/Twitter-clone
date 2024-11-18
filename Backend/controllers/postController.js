@@ -65,26 +65,26 @@ export const commentOnPost = async (req, res) => {
         const userId = req.user._id;
 
         if (!text) {
-            return res.status(400).json({ error: "text field is required" });
+            return res.status(400).json({ error: 'Text field is required' });
         }
-
         const post = await Post.findById(postId)
 
         if (!post) {
-            return res.status(400).json({ error: "post not found" });
+            return res.status(404).json({ error: 'Post not found' })
         }
 
         const comment = { user: userId, text }
 
         post.comments.push(comment);
-        await post.save()
+        await post.save();
 
         res.status(200).json(post)
+
     } catch (error) {
-        console.log("error in commentOnPost controller:", error);
-        res.status(500).json({ error: "internal server error" });
+        console.log('Error in commentOnPost controller: ', error);
+        res.status(500).json({ error: 'internal server error' });
     }
-}
+};
 
 export const likeUnlikePost = async (req, res) => {
     try {
@@ -101,11 +101,11 @@ export const likeUnlikePost = async (req, res) => {
 
         if (userLikedPost) {
             await Post.updateOne({ _id: postId }, { $pull: { likes: userId } })
-            await User.updateOne({ _id: userId }, { $pull: { LikedPosts: postId } })
+            await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } })
             res.status(200).json({ message: "post unliked successfully" })
         } else {
             post.likes.push(userId);
-            await User.updateOne({ _id: userId }, { $push: { LikedPosts: postId } })
+            await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } })
             await post.save();
 
             const notification = new Notification({
@@ -145,27 +145,29 @@ export const getAllPosts = async (req, res) => {
     }
 }
 
-export const getLikedPosts = async (req, res) => {
+export const getlikedPosts = async (req, res) => {
 
     const userId = req.params.id;
+
     try {
         const user = await User.findById(userId);
-        if (!user) return res.status(404).json({ error: "user not found" })
+        if (!user) return res.status(404).json({ error: 'User not found' });
 
         const likedPosts = await Post.find({ _id: { $in: user.likedPosts } })
             .populate({
-                path: "user",
-                select: "-password"
+                path: 'user',
+                select: '-password'
             }).populate({
-                path: "comments.user",
-                select: "-password"
+                path: 'comments.user',
+                select: '-password'
             });
-        res.status(200).json(likedPosts)
+
+        res.status(200).json(likedPosts);
     } catch (error) {
-        console.log("error in getLikedPosts controller:", error);
-        res.status(500).json({ error: "internal server error" });
+        console.log('Error in getLikedPost controller: ', error);
+        res.status(500).json({ error: 'Internal server error' });
     }
-}
+};
 
 export const getFollowingPosts = async (req, res) => {
 

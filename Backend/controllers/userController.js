@@ -4,10 +4,10 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs"
 
 export const getUserProfile = async (req, res) => {
-    const { id } = req.params;
+    const { username } = req.params;
 
     try {
-        const user = await User.findOne({ id }).select("-password");
+        const user = await User.findOne({ username }).select("-password");
         if (!user) {
             return res.status(404).json({ message: "user not found" })
         }
